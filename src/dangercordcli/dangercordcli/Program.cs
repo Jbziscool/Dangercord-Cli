@@ -14,7 +14,7 @@ namespace dangercord
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("Invalid arguments parsed.\n\n1. dangercord creports <userid>\n2. dangercord cblacklist <userid>\n3. dangercord report <userid> <reason>\n\nMore features coming soon\n\n");
+                Console.WriteLine("\nInvalid arguments parsed.\n\n1. dangercord creports <userid>\n2. dangercord cblacklist <userid>\n3. dangercord report <userid> <reason>\n\nMore features coming soon\n\n");
                 return;
             }
 
