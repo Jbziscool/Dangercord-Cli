@@ -42,9 +42,6 @@ namespace dangercord
 
                 switch (toc)
                 {
-
-
-
                     case "cblacklist":
                         if (data.badges.blacklisted != null)
                         {
@@ -89,9 +86,6 @@ namespace dangercord
                             Console.WriteLine($"\n{userTag} - {userId} has been reported to the API for: {reasoncliarg}");
                         }
                         break;
-
-
-
                 }
             }
         }
