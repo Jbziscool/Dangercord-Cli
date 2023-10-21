@@ -5,6 +5,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
+
+
 
 namespace dangercord
 {
@@ -14,7 +18,7 @@ namespace dangercord
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("\nInvalid arguments parsed.\n\n1. dangercord creports <userid>\n2. dangercord cblacklist <userid>\n3. dangercord report <userid> <reason>\n\nMore features coming soon\n\n");
+                Console.WriteLine("\nInvalid arguments parsed.\n\n1. dangercord reports- <userid>\n2. dangercord cblacklist <userid>\n3. dangercord report <userid> <reason>\n\nMore features coming soon\n\n");
                 return;
             }
 
@@ -30,7 +34,9 @@ namespace dangercord
                 return;
             }
 
+
             string userTag = await GetUserTagViaUserIdAsync(userId);
+
 
             using (var client = new HttpClient())
             {
@@ -55,9 +61,9 @@ namespace dangercord
 
 
 
-                    case "creports":
+                    case "reports":
                         int reportss = data.reports;
-                        Console.WriteLine($"\n{userTag} - {userId} has {reportss} reports on dangercord");
+                        Console.WriteLine($"\n{userTag} - {userId} has {reportss} reports on dangercord\nView them here:\nhttps://dangercord.com/check/{userId}");
                         break;
 
 
@@ -83,7 +89,7 @@ namespace dangercord
                         }
                         else
                         {
-                            Console.WriteLine($"\n{userTag} - {userId} has been reported to the API for: {reasoncliarg}");
+                            Console.WriteLine($"\n{userTag} - {userId} has been reported to the API for: {reasoncliarg}\nYou can check their page here: https://dangercord.com/check/{userId}");
                         }
                         break;
                 }
@@ -124,7 +130,7 @@ namespace dangercord
 
                 string? userData = await response.Content.ReadAsStringAsync();
                 JObject? jsonuserdata = JObject.Parse(userData);
-                userTag = $"{jsonuserdata["username"]}#{jsonuserdata["discriminator"]}";
+                return $"{jsonuserdata["username"]}#{jsonuserdata["discriminator"]}";
             }
         }
     }
