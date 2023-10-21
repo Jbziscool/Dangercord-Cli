@@ -1,3 +1,4 @@
 {
-  "apiKey": ""
+  "apiKey": "",
+  "note": "You only need to put the actual api key, do not put bearer"
 }
