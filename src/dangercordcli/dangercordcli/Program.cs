@@ -30,7 +30,7 @@ namespace dangercord
                 return;
             }
 
-            string userTag = await GetUserTagViaUserIdAsync(userId, apiKey);
+            string userTag = await GetUserTagViaUserIdAsync(userId);
 
             using (var client = new HttpClient())
             {
@@ -110,21 +110,21 @@ namespace dangercord
 
 
 
-        static async Task<string> GetUserTagViaUserIdAsync(ulong userId, string apiKey)
+        static async Task<string> GetUserTagViaUserIdAsync(ulong userId)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Authorization", apiKey);
-                string url = $"https://dangercord.com/api/v1/user/{userId}";
-                HttpResponseMessage response = await client.GetAsync(url);
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                dynamic data = JsonConvert.DeserializeObject(jsonResponse);
-                
-                string username = data.username;
-                string discriminator = data.discriminator;
-                string userTag = $"{username}#{discriminator}";
+                HttpResponseMessage response = await client.GetAsync($"https://lookup.phish.gg/user/{userId}");
 
-                return userTag;
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine("The user was not found");
+                    Environment.Exit(0);
+                }
+
+                string? userData = await response.Content.ReadAsStringAsync();
+                JObject? jsonuserdata = JObject.Parse(userData);
+                userTag = $"{jsonuserdata["username"]}#{jsonuserdata["discriminator"]}";
             }
         }
     }
